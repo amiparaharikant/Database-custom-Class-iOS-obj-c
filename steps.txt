@@ -1,0 +1,41 @@
+Step 1 : create your DB in AppDelegate.m didFinishLaunchingWithOptions
+
+- (void)createEditableCopyOfDatabaseIfNeeded
+{
+    
+    NSLog(@"Creating editable copy of database");
+    BOOL success;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *writableDBPath = [documentsDirectory stringByAppendingPathComponent:@"calculatorApp.db"];
+    success = [fileManager fileExistsAtPath:writableDBPath];
+    if (success) return;
+    NSString *defaultDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"calculatorApp.db"];
+    success = [fileManager copyItemAtPath:defaultDBPath toPath:writableDBPath error:&error];
+    if (!success)
+    {
+        NSAssert1(0, @"Failed to create writable database file with message '%@'.", [error localizedDescription]);
+    }
+    
+}
+
+——— —————— ————— — ——— —— ——— ——— — ———— ———— ——— ——— ——— ————— — ——— —— ——— ——— — ——
+
+Step 2 : query 
+	
+Select : NSString *q=[NSString stringWithFormat:@"Select * From ContactDetailTable"];
+    GetContactArray=[Database executeQuery:q];
+
+insert : NSString *query = [NSString stringWithFormat:@"INSERT INTO AlbumDetail (Title,Title_Cover,Title_Bool,Title_Password) VALUES (\"%@\",\"%@\",\"%@\",\"%@\");",[NSString stringWithFormat:@"%@",TF_Title.text],[NSString stringWithFormat:@"%@%@%d.jpeg",TF_Title.text,TF_Title.text,1],[NSString stringWithFormat:@"%d",TitleBoll],TitlePass];
+            [Database executeQuery:query];
+
+update : NSString *query = [NSString stringWithFormat:@"UPDATE NoteDetail SET  Title ='%@',Note='%@' where Title=='%@'",[NSString stringWithFormat:@"%@",TF_title.text],[NSString stringWithFormat:@"%@",textview.text],Str];
+        
+        [Database executeScalarQuery:query];
+
+
+delete : NSString *q1=[NSString stringWithFormat:@"Delete From Capture_Image_Table where ID='%d'",idcontact];
+                    [Database executeQuery:q1];
+——— —————— ————— — ——— —— ——— ——— — ———— ———— ——— —————— ————— — ——— —— ——— ——— — ——
