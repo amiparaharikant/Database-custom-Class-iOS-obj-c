@@ -31,6 +31,9 @@ Select : NSString *q=[NSString stringWithFormat:@"Select * From ContactDetailTab
 insert : NSString *query = [NSString stringWithFormat:@"INSERT INTO AlbumDetail (Title,Title_Cover,Title_Bool,Title_Password) VALUES (\"%@\",\"%@\",\"%@\",\"%@\");",[NSString stringWithFormat:@"%@",TF_Title.text],[NSString stringWithFormat:@"%@%@%d.jpeg",TF_Title.text,TF_Title.text,1],[NSString stringWithFormat:@"%d",TitleBoll],TitlePass];
             [Database executeQuery:query];
 
+/Swift Instert
+let update = "INSERT INTO tblFav (c_image,c_name,c_number) VALUES ('\(cname)', '\(cname)', '\(cnumber)');"
+
 update : NSString *query = [NSString stringWithFormat:@"UPDATE NoteDetail SET  Title ='%@',Note='%@' where Title=='%@'",[NSString stringWithFormat:@"%@",TF_title.text],[NSString stringWithFormat:@"%@",textview.text],Str];
         
         [Database executeScalarQuery:query];
